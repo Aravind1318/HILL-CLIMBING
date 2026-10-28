@@ -1,6 +1,6 @@
 <h1>ExpNo 5 : Implement Simple Hill Climbing Algorithm</h1> 
-<h3>Name:             </h3>
-<h3>Register Number:             </h3>
+<h3>Name: ARAVIND P </h3>
+<h3>Register Number:212224240015  </h3>
 <H3>Aim:</H3>
 <p>Implement Simple Hill Climbing Algorithm and Generate a String by Mutating a Single Character at each iteration </p>
 <h2> Theory: </h2>
@@ -39,23 +39,87 @@ Feedback is provided in terms of heuristic function
 <p> Lopp Step -2 and Step-3  until we achieve the score to be Zero to achieve Global Minima.</p>
 
 <hr>
-<h2>Sample Input and Output</h2>
-<h2>Sample String:</h2> Artificial Intelligence
-<h2>Output:</h2>
-Score: 643  Solution :  8RzF:oG ]%;CPORRMe!zGvk<br>
-Score: 609  Solution :  8RzF:oG ]%;CPqRRMe!zGvk<br>
-Score: 604  Solution :  8RzF:oG ]%;CPqRRMe!zGqk<br>
-Score: 594  Solution :  8RzF:oG ]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-Score: 551  Solution :  8RzF:oGK]%;CPqRRWe!zGqk<br>
-....................................................<br>
-..................................................<br>
-................................................<br>
-Score: 1  Solution :  Artificial Intelligencf<br>
-Score: 1  Solution :  Artificial Intelligencf<br>
-Score: 1  Solution :  Artificial Intelligencf<br>
-Score: 1  Solution :  Artificial Intelligencf<br>
-Score: 0  Solution :  Artificial Intelligence<br>
+
+### Program
+
+```python
+import random
+import string
+
+def generate_random_solution(answer):
+    l = len(answer)
+    return [random.choice(string.printable) for _ in range(l)]
+
+def evaluate(solution, answer):
+    print("Current solution:", "".join(solution))
+    target = list(answer)
+    diff = 0
+
+    for i in range(len(target)):
+        s = solution[i]
+        t = target[i]
+        diff += abs(ord(s) - ord(t))
+
+    return diff
+
+def mutate_solution(solution):
+    ind = random.randint(0, len(solution) - 1)
+    solution[ind] = random.choice(string.printable)
+    return solution
+
+def SimpleHillClimbing():
+    answer = "Artificial Intelligence"
+    best = generate_random_solution(answer)
+    best_score = evaluate(best, answer)
+    max_iterations = 1000
+    iterations = 0
+
+    while True:
+        print("Score:", best_score, "Solution:", "".join(best))
+
+        if best_score == 0:
+            break
+
+        if iterations >= max_iterations:
+            print("Max iterations reached.")
+            break
+
+        new_solution = mutate_solution(list(best))
+        score = evaluate(new_solution, answer)
+
+        if score < best_score:
+            best = new_solution
+            best_score = score
+
+        iterations += 1
+
+SimpleHillClimbing()
+```
+
+### Sample Input
+
+```text
+Target String: Artificial Intelligence
+```
+
+### Output
+
+```text
+Score: 643 Solution: 8RzF:oG ]%;CPQRRMe!zGvk
+Score: 609 Solution: 8RzF:oG ]%;CPqRRMe!zGvk
+Score: 604 Solution: 8RzF:oG ]%;CPqRRMe!zGqk
+...
+Score: 1 Solution: Artificial Intelligencf
+Score: 1 Solution: Artificial Intelligencf
+Score: 0 Solution: Artificial Intelligence
+```
+
+<p>Note: The intermediate scores and strings vary because the programme uses random character generation. The target string is fixed as "Artificial Intelligence".</p>
+
+<hr>
+
+<h3>Result:</h3>
+
+<hr>
+
+<p>Thus, the Simple Hill Climbing algorithm was implemented successfully using Python 3 to generate the target string "Artificial Intelligence" by mutating individual characters and evaluating the solution using a heuristic function.</p>
